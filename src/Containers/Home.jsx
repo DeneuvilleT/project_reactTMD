@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getData as getData } from '../api/axios';
 import { Cards } from './Cards/Cards';
-import '../App.css'
+import '../App.css';
 
 function Home() {
 
@@ -13,15 +13,17 @@ function Home() {
     }, [myInputValue]);
 
 
-    const axiosRequest = (myInputValue) => {
-        getData(myInputValue).then(res => {
+    const axiosRequest = async (myInputValue) => {
+        const promise = await getData(myInputValue).then(res => {
             if (res.status === 200) {
-                setResults(res.data.results)
+                setResults(res.data.results);
             } else {
                 console.log('err', res);
             };
         });
     };
+
+
 
     return (
         <>
@@ -33,9 +35,9 @@ function Home() {
                 {
                     myResults.map((elem) => {
                         return (
-                            <>
+                            <React.Fragment key={elem.id}>
                                 <Cards dataElem={elem} />
-                            </>
+                            </React.Fragment>
                         );
                     })
                 }
